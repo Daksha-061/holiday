@@ -1,0 +1,47 @@
+<html>
+<head> 
+    <link rel="stylesheet" href="https://pyscript.net/releases/2023.11.1/core.css" />
+<script type="module" src="https://pyscript.net/releases/2023.11.1/core.js"></script>
+
+    </head>
+    <py-script>
+        import holidays
+from datetime import date, timedelta
+
+
+def find_nearest_holiday(country):
+    """
+    Find the nearest public holiday for a given country from today's date.
+
+    Args:
+    country (str): The country for which to find the nearest holiday.
+
+    Returns:
+    str: The name and date of the nearest holiday.
+    """
+    today = date.today()
+    country_holidays = holidays.country_holidays(country)
+
+    # Start with today and move forward until the next holiday is found
+    current_day = today
+    while current_day not in country_holidays:
+        current_day += timedelta(days=1)
+
+    # Return the nearest holiday
+    return f"The nearest holiday in {country} is {country_holidays.get(current_day)} on {current_day}"
+
+
+# Main program
+if __name__ == "__main__":
+    user_input = input("Please enter your query: ").strip().lower()
+
+    # Check if the user input is "holiday?"
+    if user_input == "holiday?":
+        # Call the function to find the nearest holiday in USA
+        nearest_holiday = find_nearest_holiday('US')  # 'LK' is the country code for USA
+        print(nearest_holiday)
+    else:
+        print("Please enter 'holiday?' to find out the nearest holiday in USA.")
+
+    </py-script>
+</html>
